@@ -1,4 +1,4 @@
-const ApiMultimedia = "http://localhost:8080/api/multimedia/subir";
+const ApiMultimedia = `${import.meta.env.VITE_API_URL}/api/multimedia/subir`;
 
 export const subirMultimedia = async (archivo, tipo, propiedadId) => {
   try {

@@ -15,7 +15,7 @@ const Inicio = () => {
    useEffect(() => {
     const cargarPropiedades = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/propiedades/listar");
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/propiedades/listar`);
         setPropiedades(response.data);
       } catch (error) {
         console.error("Error al cargar las propiedades:", error);

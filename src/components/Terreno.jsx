@@ -5,7 +5,7 @@ import { AiOutlineClose } from "react-icons/ai";
 // import { usePropiedadesFilter } from "../hooks/usePropiedadesFilter";
 import { Button, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, } from "@chakra-ui/react";
 import Carousel from "./Carousel";
- const API_URL = "http://localhost:8080";
+ const API_URL = `${import.meta.env.VITE_API_URL}`;
  const ENV=import.meta.env.VITE_API_URL 
 
 const Terreno = ({filteredPropiedades,filters, updateFilter}) => {
@@ -43,7 +43,7 @@ const Terreno = ({filteredPropiedades,filters, updateFilter}) => {
       setLoading(true);
 
       const response = await axios.get(
-        "http://localhost:8080/api/propiedades/paginadas",
+        `${import.meta.env.VITE_API_URL}/api/propiedades/paginadas`,
         {
           params: {
             page,

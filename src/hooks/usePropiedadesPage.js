@@ -24,7 +24,7 @@ const usePropiedadesPage = (initialParams = {}) => {
     try {
       setLoading(true);
 
-      const response = await axios.get("http://localhost:8080/api/propiedades/paginadas", {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/propiedades/paginadas`, {
         params: {
           page,
           size,

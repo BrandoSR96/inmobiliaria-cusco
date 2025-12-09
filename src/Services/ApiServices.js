@@ -1,5 +1,5 @@
 
-const API_URL = "http://localhost:8080/api/propiedades";
+const API_URL = `${import.meta.env.VITE_API_URL}/api/propiedades`;
 
 // 🧩 GET - Listar propiedad
 export async function listarPropiedades() {
