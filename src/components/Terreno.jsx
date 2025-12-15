@@ -3,20 +3,29 @@ import axios from "axios";
 import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
 // import { usePropiedadesFilter } from "../hooks/usePropiedadesFilter";
-import { Button, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, } from "@chakra-ui/react";
+import {
+  Button,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+} from "@chakra-ui/react";
 import Carousel from "./Carousel";
- const API_URL = `${import.meta.env.VITE_API_URL}`;
- const ENV=import.meta.env.VITE_API_URL 
+const API_URL = `${import.meta.env.VITE_API_URL}`;
+const ENV = import.meta.env.VITE_API_URL;
 
-const Terreno = ({filteredPropiedades,filters, updateFilter}) => {
+const Terreno = ({ filteredPropiedades, filters, updateFilter }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [scrollBehavior, setScrollBehavior] = React.useState('inside')
-  console.log(setScrollBehavior)
+  const [scrollBehavior, setScrollBehavior] = React.useState("inside");
+  console.log(setScrollBehavior);
 
-  const btnRef = React.useRef(null)
+  const btnRef = React.useRef(null);
 
   const [propiedades, setPropiedades] = useState([]);
-  console.log(propiedades)
+  console.log(propiedades);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(50);
@@ -25,8 +34,9 @@ const Terreno = ({filteredPropiedades,filters, updateFilter}) => {
 
   console.log(setSize, setDirection);
 
-  const hayFiltrosActivos = Object.entries(filters).some(([key, value]) => key !== 'busqueda' && value !== "");
-
+  const hayFiltrosActivos = Object.entries(filters).some(
+    ([key, value]) => key !== "busqueda" && value !== ""
+  );
 
   const limpiarFiltros = () => {
     updateFilter("tipo", "");
@@ -236,127 +246,129 @@ const Terreno = ({filteredPropiedades,filters, updateFilter}) => {
         <div className="w-full pb-5">
           {filteredPropiedades.length > 0 ? (
             <div
-          onClick={onOpen}
-          ref={btnRef}
-          class="lg:sticky grid justify-center w-full h-fit sm:grid-cols-1 md:grid-cols-2 xl:gap-6 gap-6 2xl:grid-cols-3 xl:grid-cols-3 2xl:gap-6 lg:grid-cols-2 lg:gap-6 md:gap-6 2xl:w-full lg:w-full md:justify-center md:items-center sm:justify-center sm:items-center md:w-full"
-        >
-          {filteredPropiedades.map((prop) => {
-            // Debug: muestra multimedia
-            console.log("Propiedad multimedia", prop.multimedia);
-            console.log("Propiedad completa:", prop);
-            console.log("Multimedia:", prop.multimedia);
-            console.log("multimedia[0]?.url:", prop.multimedia?.[0]?.url);
-            const urlImagen = prop.multimedia?.[0]?.url
-              ? `${ENV || API_URL}${prop.multimedia[0].url}`
-              : "/img/fondo.png";
-            console.log("urlImagen:", urlImagen);
-            return (
-              <div
-                key={prop.id}
-                onClick={() => {
-                  setSelectedProp(prop);
-                  onOpen();
-                }}
-                class="bg-white h-[523px] w-[360px] xl:w-full md:w-full bg-card text-card-foreground flex flex-col gap-3 py-6 rounded-xl border shadow-sm overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group 2xl:w-full lg:w-full sm:w-full "
-              >
-                <div class="flex gap-6 flex-col md:gap-3 ">
-                  <div class="relative overflow-hidden h-40 bg-muted">
-                    <span class="absolute left-70 top-1 inline-flex items-center justify-center rounded-md border text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden border-transparent [a&]:hover:bg-primary/90 z-10 text-foreground md:left-3 sm:left-3 2xl:left-3 lg:left-3 xl:left-3">
-                      {prop.estado === "DISPONIBLE" && (
-                          <p class="text-[11px] text-white py-0.5 px-2 items-center w-fit bg-green-700">
-                            DISPONIBLE  
-                          </p>
-                        )}
-                        {prop.estado === "RESERVADO" && (
-                          <p class="text-[11px] py-0.5 px-2 text-white items-center w-fit bg-yellow-600">
-                            RESERVADO
-                          </p>
-                        )}
-                        {prop.estado === "VENDIDO" && (
-                          <p class="text-[11px] py-0.5 px-2 text-white items-center w-fit bg-red-700">
-                            VENDIDO
-                          </p>
-                        )}
-                    </span>
-                    <img
-                      class="sm:w-full object-cover group-hover:scale-105 transition-transform duration-300 z-0  h-[192px] w-[382px] inset-0 text-transparent sm:h-full "
-                      src={urlImagen || prop.multimedia?.[0]?.url}
-                      alt={prop.titulo}
-                    />
-                  </div>
-                  <div class="p-[16px] flex flex-col gap-6 ">
-                    <div class="flex gap-1 items-start justify-between ">
-                      <h1 class="text-[15px] w-[150px] text-left lg:w-[150px] !xl:w-[150px] 2xl:w-[200px]">{prop.titulo}</h1>
-                      <p
-                        class="inline-flex !w-[90px] items-start px-1 h-fit text-xs justify-center rounded-md py-0.5  text-black  outline-2 outline-amber-700/100 content-center"
-                        // style={{ minWidth: "100px" }} bg-yellow-100 text-black bg-amber-800
-                      >
-                        {prop.tipo === "TERRENO_AGRICOLA" && (
-                          <p class="text-[11px]  items-center w-fit">
-                            Terreno agrícola
-                          </p>
-                        )}
-                        {prop.tipo === "TERRENO_URBANO" && (
-                          <p class="text-[11px] xl:text-[10px] w-fit items-center">
-                            Terreno urbano
-                          </p>
-                        )}
-                        {prop.tipo === "LOTIZACIÓN" && (
-                          <p class="text-[11px] w-fit items-center">
-                            {" "}
-                            Lotización
-                          </p>
-                        )}
-                      </p>
-                    </div>
-                    <div>
-                      <p class="text-sm text-left">
-                        {prop.descripcion.length > 92
-                          ? prop.descripcion.substring(0, 92) + "..."
-                          : prop.descripcion}
-                      </p>
-                    </div>
-                    <div class="flex gap-6 flex-col">
-                      <div class="flex gap-6">
+              onClick={onOpen}
+              ref={btnRef}
+              class="lg:sticky grid justify-center w-full h-fit sm:grid-cols-1 md:grid-cols-2 xl:gap-6 gap-6 2xl:grid-cols-3 xl:grid-cols-3 2xl:gap-6 lg:grid-cols-2 lg:gap-6 md:gap-6 2xl:w-full lg:w-full md:justify-center md:items-center sm:justify-center sm:items-center md:w-full"
+            >
+              {filteredPropiedades.map((prop) => {
+                // Debug: muestra multimedia
+                console.log("Propiedad multimedia", prop.multimedia);
+                console.log("Propiedad completa:", prop);
+                console.log("Multimedia:", prop.multimedia);
+                console.log("multimedia[0]?.url:", prop.multimedia?.[0]?.url);
+                const urlImagen = prop.multimedia?.[0]?.url || "/img/fondo.png";
+                console.log("urlImagen:", urlImagen);
+                return (
+                  <div
+                    key={prop.id}
+                    onClick={() => {
+                      setSelectedProp(prop);
+                      onOpen();
+                    }}
+                    class="bg-white h-[523px] w-[360px] xl:w-full md:w-full bg-card text-card-foreground flex flex-col gap-3 py-6 rounded-xl border shadow-sm overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group 2xl:w-full lg:w-full sm:w-full "
+                  >
+                    <div class="flex gap-6 flex-col md:gap-3 ">
+                      <div class="relative overflow-hidden h-40 bg-muted">
+                        <span class="absolute left-70 top-1 inline-flex items-center justify-center rounded-md border text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden border-transparent [a&]:hover:bg-primary/90 z-10 text-foreground md:left-3 sm:left-3 2xl:left-3 lg:left-3 xl:left-3">
+                          {prop.estado === "DISPONIBLE" && (
+                            <p class="text-[11px] text-white py-0.5 px-2 items-center w-fit bg-green-700">
+                              DISPONIBLE
+                            </p>
+                          )}
+                          {prop.estado === "RESERVADO" && (
+                            <p class="text-[11px] py-0.5 px-2 text-white items-center w-fit bg-yellow-600">
+                              RESERVADO
+                            </p>
+                          )}
+                          {prop.estado === "VENDIDO" && (
+                            <p class="text-[11px] py-0.5 px-2 text-white items-center w-fit bg-red-700">
+                              VENDIDO
+                            </p>
+                          )}
+                        </span>
                         <img
-                          class="w-5 h-5 text-xs"
-                          src="/public/img/MapPin.svg"
-                          alt=""
+                          class="sm:w-full object-cover group-hover:scale-105 transition-transform duration-300 z-0  h-[192px] w-[382px] inset-0 text-transparent sm:h-full "
+                          src={urlImagen}
+                          alt={prop.titulo}
                         />
-                        <p>{prop.direccion}</p>
                       </div>
-                      <div class="flex gap-6">
-                        <img
-                          class="w-5 text-xs"
-                          src="/public/img/Arrow-Arrow-expand.svg"
-                          alt=""
-                        />
-                        <p class="">{prop.metrosCuadrados} m²</p>
+                      <div class="p-[16px] flex flex-col gap-6 ">
+                        <div class="flex gap-1 items-start justify-between ">
+                          <h1 class="text-[15px] w-[150px] text-left lg:w-[150px] !xl:w-[150px] 2xl:w-[200px]">
+                            {prop.titulo}
+                          </h1>
+                          <p
+                            class="inline-flex !w-[90px] items-start px-1 h-fit text-xs justify-center rounded-md py-0.5  text-black  outline-2 outline-amber-700/100 content-center"
+                            // style={{ minWidth: "100px" }} bg-yellow-100 text-black bg-amber-800
+                          >
+                            {prop.tipo === "TERRENO_AGRICOLA" && (
+                              <p class="text-[11px]  items-center w-fit">
+                                Terreno agrícola
+                              </p>
+                            )}
+                            {prop.tipo === "TERRENO_URBANO" && (
+                              <p class="text-[11px] xl:text-[10px] w-fit items-center">
+                                Terreno urbano
+                              </p>
+                            )}
+                            {prop.tipo === "LOTIZACIÓN" && (
+                              <p class="text-[11px] w-fit items-center">
+                                {" "}
+                                Lotización
+                              </p>
+                            )}
+                          </p>
+                        </div>
+                        <div>
+                          <p class="text-sm text-left">
+                            {prop.descripcion.length > 92
+                              ? prop.descripcion.substring(0, 92) + "..."
+                              : prop.descripcion}
+                          </p>
+                        </div>
+                        <div class="flex gap-6 flex-col">
+                          <div class="flex gap-6">
+                            <img
+                              class="w-5 h-5 text-xs"
+                              src="/img/MapPin.svg"
+                              alt=""
+                            />
+                            <p>{prop.direccion}</p>
+                          </div>
+                          <div class="flex gap-6">
+                            <img
+                              class="w-5 text-xs"
+                              src="/public/img/Arrow-Arrow-expand.svg"
+                              alt=""
+                            />
+                            <p class="">{prop.metrosCuadrados} m²</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="flex gap-6 px-4 pb-4">
+                        <svg
+                          class="text-amber-950 "
+                          viewBox="0 0 32 32"
+                          width="32"
+                          height="32"
+                          stroke="currentColor"
+                          fill="brown"
+                        >
+                          <path d="M8 21.6c0.3 3.3 3 5.7 7.2 6V30h2.1v-2.4c4.5-0.4 7.4-2.9 7.3-6.6 0-3.2-1.9-5-5.9-6.1l-1.4-0.4V6.9c2.2 0.2 3.8 1.4 4.1 3.3h2.9c-0.3-3.2-3.1-5.5-7-5.8V2H15.2v2.5c-3.9 0.5-6.5 2.9-6.6 6.3 0 2.9 1.9 5 5.4 5.8l1.2 0.3v8.1c-2.3-0.3-3.9-1.6-4.3-3.4H8z m6.8-7.7c-2.1-0.5-3.2-1.6-3.2-3.2 0-1.9 1.4-3.3 3.6-3.7v7l-0.4-0.1z m3.2 3.7c2.6 0.6 3.7 1.7 3.7 3.6 0 2.2-1.7 3.7-4.4 3.8V17.5l0.7 0.1z" />
+                        </svg>
+                        <p class="text-2xl text-amber-950 font-bold">
+                          {prop.precio}
+                        </p>
                       </div>
                     </div>
                   </div>
-                  <div class="flex gap-6 px-4 pb-4">
-                    <svg
-                      class="text-amber-950 "
-                      viewBox="0 0 32 32"
-                      width="32"
-                      height="32"
-                      stroke="currentColor"
-                      fill="brown"
-                    >
-                      <path d="M8 21.6c0.3 3.3 3 5.7 7.2 6V30h2.1v-2.4c4.5-0.4 7.4-2.9 7.3-6.6 0-3.2-1.9-5-5.9-6.1l-1.4-0.4V6.9c2.2 0.2 3.8 1.4 4.1 3.3h2.9c-0.3-3.2-3.1-5.5-7-5.8V2H15.2v2.5c-3.9 0.5-6.5 2.9-6.6 6.3 0 2.9 1.9 5 5.4 5.8l1.2 0.3v8.1c-2.3-0.3-3.9-1.6-4.3-3.4H8z m6.8-7.7c-2.1-0.5-3.2-1.6-3.2-3.2 0-1.9 1.4-3.3 3.6-3.7v7l-0.4-0.1z m3.2 3.7c2.6 0.6 3.7 1.7 3.7 3.6 0 2.2-1.7 3.7-4.4 3.8V17.5l0.7 0.1z" />
-                    </svg>
-                    <p class="text-2xl text-amber-950 font-bold">
-                      {prop.precio}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+                );
+              })}
+            </div>
           ) : (
-            <div class="text-gray-500 w-[100%] h-[500px] flex justify-center items-center">No se encontraron terrenos con los criterios seleccionados</div>
+            <div class="text-gray-500 w-[100%] h-[500px] flex justify-center items-center">
+              No se encontraron terrenos con los criterios seleccionados
+            </div>
           )}
         </div>
 
