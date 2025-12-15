@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useToast } from '@chakra-ui/react'
+import { useToast } from "@chakra-ui/react";
 const Dashboard = () => {
-  const toast = useToast()
+  const toast = useToast();
   const API_Login = `${import.meta.env.VITE_API_URL}/auth/login`;
 
   const [email, setEmail] = useState("");
@@ -19,7 +19,7 @@ const Dashboard = () => {
         },
         body: JSON.stringify({ email, password }),
       });
-      
+
       if (!respuesta.ok) {
         throw new Error("Error en Login:" + respuesta.status);
       }
@@ -33,23 +33,34 @@ const Dashboard = () => {
         localStorage.setItem("UsuarioID", datos.usuario.id);
         console.log(datos.token);
       }
-      
+
       // Puedes redirigir al usuario a otra página o cambiar el estado de sesión
       // alert("Login exitoso");
-      toast({title: "Exitoso.",description: " Login exitoso",status: "success",duration: 3000,isClosable: true,})
+      toast({
+        title: "Exitoso.",
+        description: " Login exitoso",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
       navigate("/crud");
     } catch (error) {
       console.error("❌ Error al iniciar sesión:", error);
       // alert("Login fallido");
-      toast({title: "Aviso",description:"varificar e-mail o password",status:"warning",duration:3000,isClosable:true})
-    
+      toast({
+        title: "Aviso",
+        description: "varificar e-mail o password",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   }
   return (
-    <div class='flex justify-center items-center h-screen bg-gradient-to-r from-amber-700 via-amber-600  to-amber-800 '>
+    <div class="flex justify-center items-center h-screen bg-gradient-to-r from-amber-700 via-amber-600  to-amber-800 ">
       <div class="flex justify-center items-center">
         <div class="w-100 h-[100%] flex gap-5 flex-col py-15 px-5 justify-center bg-neutral-50 shadow-md rounded-md">
-          <img src="/public/img/logo.jpg" alt="Logo" class="w-30 self-center" />
+          <img src="/img/logo.jpg" alt="Logo" class="w-30 self-center" />
           <form
             onSubmit={Login}
             class="flex flex-col text-left px-10 py-4 gap-5 h-fit justify-between"
