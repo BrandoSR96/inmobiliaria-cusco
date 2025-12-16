@@ -1,4 +1,5 @@
-const API_CONTAC = `${API_URL}/api/contacto`;
+const BASE_URL = import.meta.env.VITE_API_URL;
+const API_CONTAC = `${BASE_URL}/api/contacto`;
 
 // 🧩 POST - Crear propiedad
 export async function crearContacto(data) {
