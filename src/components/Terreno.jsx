@@ -395,10 +395,11 @@ const Terreno = ({ filteredPropiedades, filters, updateFilter }) => {
                     <div class=" h-full bg-muted">
                       {(() => {
                         const imagenesProp =
-                          selectedProp?.multimedia?.map(
-                            (img) => `${API_URL}${img.url}`
+                          selectedProp?.multimedia?.map((img) =>
+                            img.url.startsWith("http")
+                              ? img.url
+                              : `${API_URL}${img.url}`
                           ) || [];
-
                         return (
                           <Carousel
                             images={
