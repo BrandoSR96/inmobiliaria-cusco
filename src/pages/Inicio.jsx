@@ -1,4 +1,4 @@
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import Footer from "../components/Footer";
 import Formulario from "../components/Formulario";
@@ -6,27 +6,29 @@ import Navbar from "../components/Navbar";
 import Terreno from "../components/Terreno";
 import { usePropiedadesFilter } from "../hooks/usePropiedadesFilter";
 import axios from "axios";
+import BtnSalir from "../components/BtnSalir";
 
 const Inicio = () => {
   const [propiedades, setPropiedades] = useState([]);
-  const { filteredPropiedades,filters, updateFilter  } = usePropiedadesFilter(propiedades);
+  const { filteredPropiedades, filters, updateFilter } =
+    usePropiedadesFilter(propiedades);
   // const [tema, setTema] = useState("claro");
 
-   useEffect(() => {
+  useEffect(() => {
     const cargarPropiedades = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/propiedades/listar`);
+        const response = await axios.get(`${API_URL}/api/propiedades/listar`);
         setPropiedades(response.data);
       } catch (error) {
         console.error("Error al cargar las propiedades:", error);
       }
     };
     cargarPropiedades();
-   },[]);
+  }, []);
 
-    // const hayFiltrosBusqueda = Object.values(filters).some(value => value !== "");
-    const hayFiltrosBusqueda = filters.busqueda.trim() !== "";
-    const limpiarBusqueda = () => {
+  // const hayFiltrosBusqueda = Object.values(filters).some(value => value !== "");
+  const hayFiltrosBusqueda = filters.busqueda.trim() !== "";
+  const limpiarBusqueda = () => {
     updateFilter("busqueda", "");
   };
 
@@ -35,10 +37,7 @@ const Inicio = () => {
       <header class="justify-center flex items-center w-full 2xl:w-full xl:w-[100%] lg:w-[100%] md:w-[100%] sm:w-[100%] ">
         <Navbar />
       </header>
-      <main
-        id="Propiedades"
-        class=" flex justify-center bg-[#FEF7F2] h-fit"
-      >
+      <main id="Propiedades" class=" flex justify-center bg-[#FEF7F2] h-fit">
         <section class="relative py-[32px] max-w-[1468px] h-[100%] bg-[#FEF7F2] my-auto flex justify-center flex-col xl:px-[64px] xl:mx-[20px] lg:px-[16px] lg:mx-[20px] 2xl:w-full 2xl:justify-center md:px-[35px] md:mx-[35px] md:items-center sm:px-[35px] sm:mx-[35px] 2xl:mx-auto">
           <div class="relative max-w-[100%] w-[400px] mx-auto max-h-[48px] flex justify-center py-1 mb-10 items-center 2xl:px-0  xl:w-[100%] xl:px-0 md:px-0 md:w-[100%] lg:w-full bg-[#FEF7F2] lg:px-0 2xl:w-full  sm:w-full">
             <input
@@ -63,14 +62,21 @@ const Inicio = () => {
           <Formulario />
           <Footer />
         </section>
-        
-          <div class=" fixed  bottom-5 right-5 ">
+
+        <div class=" fixed  bottom-5 right-5 ">
           {/* https://wa.me/+51919527727  */}
-          <a class="!hover:bg-amber-400" href="https://wa.me/+51919527727?text=Hola%20quiero%20contactame%20contigo" target="_blank">
-            <img class="w-13 hover:w-15 transition-all duration-200"
-              src="../../public/img/whatsapp.png" alt="" />
+          <a
+            class="!hover:bg-amber-400"
+            href="https://wa.me/+51919527727?text=Hola%20quiero%20contactame%20contigo"
+            target="_blank"
+          >
+            <img
+              class="w-13 hover:w-15 transition-all duration-200"
+              src="../../public/img/whatsapp.png"
+              alt=""
+            />
           </a>
-          </div>
+        </div>
       </main>
     </div>
   );

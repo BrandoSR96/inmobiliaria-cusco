@@ -14,7 +14,7 @@ import {
   ModalBody,
 } from "@chakra-ui/react";
 import Carousel from "./Carousel";
-const API_URL = `${import.meta.env.VITE_API_URL}`;
+const API_URL = import.meta.env.VITE_API_URL;
 const ENV = import.meta.env.VITE_API_URL;
 
 const Terreno = ({ filteredPropiedades, filters, updateFilter }) => {
@@ -52,17 +52,14 @@ const Terreno = ({ filteredPropiedades, filters, updateFilter }) => {
     try {
       setLoading(true);
 
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/propiedades/paginadas`,
-        {
-          params: {
-            page,
-            size,
-            sortBy: "precio",
-            direction,
-          },
-        }
-      );
+      const response = await axios.get(`${API_URL}/api/propiedades/paginadas`, {
+        params: {
+          page,
+          size,
+          sortBy: "precio",
+          direction,
+        },
+      });
       setPropiedades(response.data.content || []);
       setTotalPages(response.data.totalPages || 1);
     } catch (error) {
@@ -288,7 +285,7 @@ const Terreno = ({ filteredPropiedades, filters, updateFilter }) => {
                         </span>
                         <img
                           class="sm:w-full object-cover group-hover:scale-105 transition-transform duration-300 z-0  h-[192px] w-[382px] inset-0 text-transparent sm:h-full "
-                          src={urlImagen}
+                          src={urlImagen || prop.multimedia?.[0]?.url}
                           alt={prop.titulo}
                         />
                       </div>
@@ -330,7 +327,7 @@ const Terreno = ({ filteredPropiedades, filters, updateFilter }) => {
                           <div class="flex gap-6">
                             <img
                               class="w-5 h-5 text-xs"
-                              src="/img/MapPin.svg"
+                              src="/public/img/MapPin.svg"
                               alt=""
                             />
                             <p>{prop.direccion}</p>

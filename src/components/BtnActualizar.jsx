@@ -9,7 +9,7 @@ import { subirMultimedia } from "../hooks/useMultimedia";
 
 const BtnActualizar = ({ propiedad, onActualizado }) => {
   //Subir archivo
-  const [archivo, setArchivo] = useState(null);
+  const [archivo, setArchivo] = useState([]); //-file
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [formData, setFormData] = useState({ ...propiedad });
@@ -50,30 +50,37 @@ const BtnActualizar = ({ propiedad, onActualizado }) => {
       });
       return;
     }
-
     // 2️⃣ Si hay imagen seleccionada, subirla
-    if (archivo) {
-      try {
-        await subirMultimedia(archivo, "imagen", formData.id);
+    if (archivo.length > 0) {
+  try {
+    const imagenesSubidas = [];
 
-        toast({
-          title: "Imagen actualizada",
-          description: "La nueva imagen fue subida correctamente",
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-        });
-      } catch (error) {
-        console.error("Error subiendo multimedia:", error);
-        toast({
-          title: "Error al subir imagen",
-          description: "La propiedad se actualizó, pero la imagen falló",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
-      }
+    for (const img of archivo) {
+      const nuevaImagen = await subirMultimedia(img, "imagen", formData.id);
+      imagenesSubidas.push({ url: nuevaImagen.archivo.url });
     }
+
+    toast({
+      title: "Imágenes subidas",
+      description: "Todas las imágenes fueron subidas correctamente",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+
+    console.log("Imágenes subidas:", imagenesSubidas);
+
+  } catch (error) {
+    console.error("Error subiendo multimedia:", error);
+    toast({
+      title: "Error al subir imágenes",
+      description: "La propiedad se actualizó, pero algunas imágenes fallaron",
+      status: "error",
+      duration: 3000,
+      isClosable: true,
+    });
+  }
+}
 
     toast({
       title: "Propiedad actualizada",
@@ -100,27 +107,6 @@ const BtnActualizar = ({ propiedad, onActualizado }) => {
   }
 };
 
-  // const handleSubmit = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const response = await actualizarPropiedad(formData.id, formData);
-
-  //     if (response) {
-  //       // alert("✅ Propiedad actualizada correctamente");
-  //       toast({title: "Exitoso.",description: "Propiedad actualizada correctamente",status: "success",duration: 3000,isClosable: true,})
-  //       onClose();
-  //       if (onActualizado) onActualizado(); // 🔁 recarga lista
-  //     } else {
-  //       // toast({title:"No se actualizo",description: "No se hizo ningun cambio",status: "info",duration: 2000,isClosable: true})
-  //       alert("❌ No se pudo actualizar la propiedad");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error al actualizar:", error);
-  //     alert("Error al actualizar la propiedad");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   return (
     <>
@@ -150,11 +136,11 @@ const BtnActualizar = ({ propiedad, onActualizado }) => {
       {/* Modal */}
       <Modal isOpen={isOpen} onClose={onClose} size="xl">
         <ModalOverlay />
-        <ModalContent m={4} w={'448px'}>
-          <ModalHeader py={'5px'}>Editar Propiedad</ModalHeader>
+        <ModalContent m={4} w={"448px"}>
+          <ModalHeader py={"5px"}>Editar Propiedad</ModalHeader>
           <ModalCloseButton />
 
-          <ModalBody >
+          <ModalBody>
             <FormControl mb={1}>
               <FormLabel>Título</FormLabel>
               <Input
@@ -248,12 +234,18 @@ const BtnActualizar = ({ propiedad, onActualizado }) => {
             </div>
 
             <div class="mb-3">
-              <FormLabel >Adjuntar Imagen</FormLabel>
-              <Input class='rounded-sm border-4 border-indigo-500 ' type="file"  
-              onChange={(e) => setArchivo(e.target.files[0])}/>
+              <FormLabel class="flex flex-col gap-1">File Imagen</FormLabel>
+              <Input
+                key="fileInput"
+                type="file"
+                multiple
+                accept="image/*"
+                class="pb-2"
+                onChange={(e) => setArchivo(Array.from(e.target.files))}
+                // onChange={(e) => setArchivo(e.target.files[0])}
+              />
+             
             </div>
-
-
             <FormControl mb={3}>
               <FormLabel>Características</FormLabel>
               <Input
@@ -264,7 +256,7 @@ const BtnActualizar = ({ propiedad, onActualizado }) => {
             </FormControl>
           </ModalBody>
 
-          <ModalFooter pt={'0px'} pb={'10px'}>
+          <ModalFooter pt={"0px"} pb={"10px"}>
             <Button onClick={onClose} mr={3}>
               Cancelar
             </Button>
@@ -283,3 +275,55 @@ const BtnActualizar = ({ propiedad, onActualizado }) => {
 };
 
 export default BtnActualizar;
+
+
+    // if (archivo.length > 0) {
+    //   try {
+    //     await subirMultimedia(archivo, "imagen", formData.id);
+
+    //     toast({
+    //       title: "Imagen actualizada",
+    //       description: "La nueva imagen fue subida correctamente",
+    //       status: "success",
+    //       duration: 3000,
+    //       isClosable: true,
+    //     });
+    //   } catch (error) {
+    //     console.error("Error subiendo multimedia:", error);
+    //     toast({
+    //       title: "Error al subir imagen",
+    //       description: "La propiedad se actualizó, pero la imagen falló",
+    //       status: "error",
+    //       duration: 3000,
+    //       isClosable: true,
+    //     });
+
+     {/* <FormLabel >Adjuntar Imagen</FormLabel>
+              <Input 
+              class='rounded-sm border-4 border-indigo-500 ' 
+              type="file"  
+              onChange={(e) => setArchivo(e.target.files[0])}/> */}
+    //   }
+    // }
+
+  // const handleSubmit = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const response = await actualizarPropiedad(formData.id, formData);
+
+  //     if (response) {
+  //       // alert("✅ Propiedad actualizada correctamente");
+  //       toast({title: "Exitoso.",description: "Propiedad actualizada correctamente",status: "success",duration: 3000,isClosable: true,})
+  //       onClose();
+  //       if (onActualizado) onActualizado(); // 🔁 recarga lista
+  //     } else {
+  //       // toast({title:"No se actualizo",description: "No se hizo ningun cambio",status: "info",duration: 2000,isClosable: true})
+  //       alert("❌ No se pudo actualizar la propiedad");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error al actualizar:", error);
+  //     alert("Error al actualizar la propiedad");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };

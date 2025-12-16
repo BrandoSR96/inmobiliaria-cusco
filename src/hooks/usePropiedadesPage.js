@@ -24,7 +24,7 @@ const usePropiedadesPage = (initialParams = {}) => {
     try {
       setLoading(true);
 
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/propiedades/paginadas`, {
+      const response = await axios.get(`${API_URL}/api/propiedades/paginadas`, {
         params: {
           page,
           size,
@@ -47,7 +47,18 @@ const usePropiedadesPage = (initialParams = {}) => {
     } finally {
       setLoading(false);
     }
-  }, [page, size, direction, tipo, estado, precioMin, precioMax, areaMin, areaMax, distrito]);
+  }, [
+    page,
+    size,
+    direction,
+    tipo,
+    estado,
+    precioMin,
+    precioMax,
+    areaMin,
+    areaMax,
+    distrito,
+  ]);
 
   // 🔁 Recargar cada vez que cambien los filtros o la página
   useEffect(() => {

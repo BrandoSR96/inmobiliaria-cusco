@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { listarContactos } from "../Services/ApiContacto";
 
 const TabUsuario = () => {
-  const [contacto,setContacto]=useState("");
+  const [contacto,setContacto]=useState([]);
   console.log("contacto", contacto);
   console.log("set", setContacto)
 
@@ -26,11 +26,9 @@ const TabUsuario = () => {
       </div>
       <section >
         {/* class="!border-1 !border-black !rounded-lg" */}
-        <SimpleGrid
-          spacing={4}
-          templateColumns="repeat(auto-fill, minmax(250px, 2fr))"
-        >
-          {Array.isArray(contacto) && contacto.map((contac, index) => (
+        <SimpleGrid spacing={4} templateColumns="repeat(auto-fill, minmax(250px, 2fr))" >
+          {contacto.map((contac, index) => (
+            /*Array.isArray(contacto) && */ 
           <Card key={index} boxShadow={'2px 2px 2px 2px rgb(0,0,0,0.5)'}>
             <CardHeader pb="5px">
               <Heading size="md" pb="5px" fontSize={'18px'}> {contac.nombre} {contac.apellidos}</Heading>

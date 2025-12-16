@@ -31,33 +31,20 @@ const Crud = () => {
     duration: null,
     position: "top",
     render: ({ onClose }) => (
-      <Box
-        position="fixed"
+      <Box position="fixed"
         // top="50%"
         // left="50%"
         // transform="translate(-50%, -50%)"
-        bg="#FEF7F2"
-        color="#8A3A13"
-        p={5}
-        borderRadius="md"
-        textAlign="center"
-        boxShadow="lg"
-      >
+        bg="#FEF7F2" color="#8A3A13" p={5} borderRadius="md" textAlign="center" boxShadow="lg" >
         <Text fontWeight="bold" mb={4}>
           ¿Eliminar esta propiedad?
         </Text>
 
         <Flex justify="center" gap={3}>
-          <Button
-            bg="#8A3A13"
-            color="white"
-            _hover={{ bg: "#6d2d0f" }}
-            size="sm"
+          <Button bg="#8A3A13" color="white" _hover={{ bg: "#6d2d0f" }} size="sm"
             onClick={async () => {
               onClose(); // cerrar confirmación
-
               const exito = await eliminarPropiedad(id);
-
               if (exito) {
                 toast({
                   title: "Exitoso",
@@ -82,11 +69,8 @@ const Crud = () => {
             Sí
           </Button>
 
-          <Button
-            variant="outline"
-            borderColor="#8A3A13"
-            color="#8A3A13"
-            size="sm"
+          <Button variant="outline" borderColor="#8A3A13"
+            color="#8A3A13" size="sm"
             onClick={() => {
               onClose();
               toast({

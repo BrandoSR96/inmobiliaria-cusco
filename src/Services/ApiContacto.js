@@ -1,4 +1,4 @@
-const API_CONTAC = `${import.meta.env.VITE_API_URL}/api/contacto`;
+const API_CONTAC = `${API_URL}/api/contacto`;
 
 // 🧩 POST - Crear propiedad
 export async function crearContacto(data) {
@@ -20,7 +20,9 @@ export async function crearContacto(data) {
       responseData = { message: text || "Respuesta no válida del servidor" };
     }
     if (!response.ok) {
-      const errorMessage = responseData?.message || `Error al crear propiedad (status ${response.status})`;
+      const errorMessage =
+        responseData?.message ||
+        `Error al crear propiedad (status ${response.status})`;
       throw new Error(errorMessage);
     }
     return responseData;
@@ -29,7 +31,6 @@ export async function crearContacto(data) {
     throw error;
   }
 }
-
 
 import axios from "axios";
 
@@ -46,5 +47,3 @@ export const listarContactos = async () => {
     throw new Error("Error al listar propiedades: " + error.response?.status);
   }
 };
-
-

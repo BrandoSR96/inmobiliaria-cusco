@@ -1,4 +1,4 @@
-const ApiMultimedia = `${import.meta.env.VITE_API_URL}/api/multimedia/subir`;
+const ApiMultimedia = `${API_URL}/api/multimedia/subir`;
 
 export const subirMultimedia = async (archivo, tipo, propiedadId) => {
   try {
@@ -7,15 +7,15 @@ export const subirMultimedia = async (archivo, tipo, propiedadId) => {
 
     const formData = new FormData();
     formData.append("archivo", archivo);
-    formData.append("tipo", tipo);          
+    formData.append("tipo", tipo);
     formData.append("propiedadId", propiedadId);
 
     const respuesta = await fetch(ApiMultimedia, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${token}`,  
+        Authorization: `Bearer ${token}`,
       },
-      body: formData,  // El navegador define correctamente multipart/form-data
+      body: formData, // El navegador define correctamente multipart/form-data
     });
 
     if (!respuesta.ok) {
@@ -29,46 +29,41 @@ export const subirMultimedia = async (archivo, tipo, propiedadId) => {
   }
 };
 
-
-
-
 // export const useMultimedia = () => {
-    // export const subirMultimedia = async ( archivo, descripcion, propiedadId ) => {
-    //   try {
-    //     const token = localStorage.getItem("token");
-    //     if (!token) throw new Error("No hay token disponible");
-    //     console.log("PropiedadID en hook:", propiedadId);
-    //     console.log("Archivo en hook:", token);
+// export const subirMultimedia = async ( archivo, descripcion, propiedadId ) => {
+//   try {
+//     const token = localStorage.getItem("token");
+//     if (!token) throw new Error("No hay token disponible");
+//     console.log("PropiedadID en hook:", propiedadId);
+//     console.log("Archivo en hook:", token);
 
-    //     const formData = new FormData();
-    //     formData.append("archivo", archivo);
-    //     formData.append("descripcion", descripcion);
-    //     formData.append("propiedadId", propiedadId);
+//     const formData = new FormData();
+//     formData.append("archivo", archivo);
+//     formData.append("descripcion", descripcion);
+//     formData.append("propiedadId", propiedadId);
 
-    //     const respuesta = await fetch(ApiMultimedia, {
-    //       method: "POST",
-    //       headers: {
-    //         Authorization: `Bearer ${token}`,
-    //       },
-    //       body: formData,
-    //     });
+//     const respuesta = await fetch(ApiMultimedia, {
+//       method: "POST",
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//       },
+//       body: formData,
+//     });
 
-    //     if (!respuesta.ok) {
-    //       throw new Error(`Error del servidor: ${respuesta.status}`);
-    //     }
+//     if (!respuesta.ok) {
+//       throw new Error(`Error del servidor: ${respuesta.status}`);
+//     }
 
-    //     const data = await respuesta.json();
-    //     return data;
-    //   } catch (error) {
-    //     console.error("Error al subir multimedia:", error);
-    //     throw error;
-    //   }
-    // };
-    // subirMultimedia;
+//     const data = await respuesta.json();
+//     return data;
+//   } catch (error) {
+//     console.error("Error al subir multimedia:", error);
+//     throw error;
+//   }
+// };
+// subirMultimedia;
 
 // };
-
-
 
 // const ApiMultimedia = "http://localhost:8080/api/multimedia/subir";
 
@@ -95,4 +90,3 @@ export const subirMultimedia = async (archivo, tipo, propiedadId) => {
 //         }
 //     }
 //     return { subirMultimedia };
-
