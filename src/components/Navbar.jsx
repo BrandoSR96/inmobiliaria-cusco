@@ -45,7 +45,7 @@ const Navbar = () => {
             onClick={() => setOpenTema(!openTema)} // 👈 toggle React
             class="bg-[#FEF7F2] text-black !p-1 rounded-sm cursor-pointer relative shadow-sm shadow-black"
           >
-            <img class="w-5" src="/public/img/color.png" alt="" />
+            <img class="w-5" src="/img/color.png" alt="" />
           </button>
 
           {/* MENÚ TEMAS */}
@@ -65,7 +65,7 @@ const Navbar = () => {
             </div>
           )}
           <button class="bg-[#FEF7F2] text-black !p-1 rounded-sm cursor-pointer shadow-sm shadow-black">
-            <img class="w-5" src="/public/img/global.png" alt="" />
+            <img class="w-5" src="/img/global.png" alt="" />
           </button>
         </div>
       </div>

@@ -1,11 +1,20 @@
-import { Button, Card, CardBody, CardFooter, CardHeader, Heading, SimpleGrid, Text } from "@chakra-ui/react";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Heading,
+  SimpleGrid,
+  Text,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { listarContactos } from "../Services/ApiContacto";
 
 const TabUsuario = () => {
-  const [contacto,setContacto]=useState([]);
+  const [contacto, setContacto] = useState([]);
   console.log("contacto", contacto);
-  console.log("set", setContacto)
+  console.log("set", setContacto);
 
   useEffect(() => {
     listarContactos()
@@ -24,34 +33,46 @@ const TabUsuario = () => {
         </div>
         <span>{contacto.length} Contactos encontrados</span>
       </div>
-      <section >
+      <section>
         {/* class="!border-1 !border-black !rounded-lg" */}
-        <SimpleGrid spacing={4} templateColumns="repeat(auto-fill, minmax(250px, 2fr))" >
+        <SimpleGrid
+          spacing={4}
+          templateColumns="repeat(auto-fill, minmax(250px, 2fr))"
+        >
           {contacto.map((contac, index) => (
-            /*Array.isArray(contacto) && */ 
-          <Card key={index} boxShadow={'2px 2px 2px 2px rgb(0,0,0,0.5)'}>
-            <CardHeader pb="5px">
-              <Heading size="md" pb="5px" fontSize={'18px'}> {contac.nombre} {contac.apellidos}</Heading>
-              <Text fontSize={'14px'} color={'silver'} fontWeight={'600'}>{contac.email}</Text>
-            </CardHeader>
-            <CardBody pt={'5px'} pb={'5px'}>
-              <Text fontSize={'14px'}>
-                {contac.comentario}
-              </Text>
-            </CardBody>
-            <CardFooter pt={'5px'}>
-              <div class='w-full'>
-                <a href={`https://wa.me/+51${contac.celular}?text=Hola%20quiero%20contactame%20contigo`} 
-                target="_blank" class='w-full'>
-                <Button class='w-full flex justify-center !bg-[#EDF2F7] !py-1 !rounded-sm'>
-                  <img class="w-5 m-1 transition-all duration-200"
-                    src="../../public/img/whatsapp.png" alt="" />
-                  <span class='font-semibold'>+51 {contac.celular}</span> 
-                </Button>
-              </a> 
-              </div>    
-            </CardFooter>
-          </Card>
+            /*Array.isArray(contacto) && */
+            <Card key={index} boxShadow={"2px 2px 2px 2px rgb(0,0,0,0.5)"}>
+              <CardHeader pb="5px">
+                <Heading size="md" pb="5px" fontSize={"18px"}>
+                  {" "}
+                  {contac.nombre} {contac.apellidos}
+                </Heading>
+                <Text fontSize={"14px"} color={"silver"} fontWeight={"600"}>
+                  {contac.email}
+                </Text>
+              </CardHeader>
+              <CardBody pt={"5px"} pb={"5px"}>
+                <Text fontSize={"14px"}>{contac.comentario}</Text>
+              </CardBody>
+              <CardFooter pt={"5px"}>
+                <div class="w-full">
+                  <a
+                    href={`https://wa.me/+51${contac.celular}?text=Hola%20quiero%20contactame%20contigo`}
+                    target="_blank"
+                    class="w-full"
+                  >
+                    <Button class="w-full flex justify-center !bg-[#EDF2F7] !py-1 !rounded-sm">
+                      <img
+                        class="w-5 m-1 transition-all duration-200"
+                        src="/img/whatsapp.png"
+                        alt="whatsapp"
+                      />
+                      <span class="font-semibold">+51 {contac.celular}</span>
+                    </Button>
+                  </a>
+                </div>
+              </CardFooter>
+            </Card>
           ))}
         </SimpleGrid>
         {/* <table class="w-full caption-bottom text-sm border-collapse md:border-separate md:rounded-lg overflow-hidden !border-1 !border-black">
@@ -124,6 +145,6 @@ const TabUsuario = () => {
       </section>
     </main>
   );
-}
+};
 
-export default TabUsuario
+export default TabUsuario;
