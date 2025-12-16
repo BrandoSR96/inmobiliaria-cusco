@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const usePropiedadesPage = (initialParams = {}) => {
   const [propiedades, setPropiedades] = useState([]);
   const [totalPages, setTotalPages] = useState(1);

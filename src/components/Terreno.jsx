@@ -15,7 +15,6 @@ import {
 } from "@chakra-ui/react";
 import Carousel from "./Carousel";
 const API_URL = import.meta.env.VITE_API_URL;
-const ENV = import.meta.env.VITE_API_URL;
 
 const Terreno = ({ filteredPropiedades, filters, updateFilter }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -397,7 +396,7 @@ const Terreno = ({ filteredPropiedades, filters, updateFilter }) => {
                       {(() => {
                         const imagenesProp =
                           selectedProp?.multimedia?.map(
-                            (img) => `${ENV || API_URL}${img.url}`
+                            (img) => `${API_URL}${img.url}`
                           ) || [];
 
                         return (

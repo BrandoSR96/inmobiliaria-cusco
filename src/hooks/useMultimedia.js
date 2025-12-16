@@ -1,3 +1,4 @@
+const API_URL = import.meta.env.VITE_API_URL;
 const ApiMultimedia = `${API_URL}/api/multimedia/subir`;
 
 export const subirMultimedia = async (archivo, tipo, propiedadId) => {

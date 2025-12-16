@@ -1,4 +1,5 @@
-const API_URL = `${API_URL}/api/propiedades`;
+const BASE_URL = import.meta.env.VITE_API_URL;
+const API_URL = `${BASE_URL}/api/propiedades`;
 
 // 🧩 GET - Listar propiedad
 export async function listarPropiedades() {

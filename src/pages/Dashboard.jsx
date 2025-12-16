@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 const Dashboard = () => {
   const toast = useToast();
+  const API_URL = import.meta.env.VITE_API_URL;
   const API_Login = `${API_URL}/auth/login`;
 
   const [email, setEmail] = useState("");
