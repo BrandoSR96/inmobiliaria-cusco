@@ -252,10 +252,7 @@ const Terreno = ({ filteredPropiedades, filters, updateFilter }) => {
                 console.log("Propiedad completa:", prop);
                 console.log("Multimedia:", prop.multimedia);
                 console.log("multimedia[0]?.url:", prop.multimedia?.[0]?.url);
-                const API_URL = import.meta.env.VITE_API_URL;
-                const urlImagen = prop.multimedia?.[0]?.url
-                  ? `${API_URL}/${prop.multimedia[0].url}`
-                  : "/img/fondo.png";
+                const urlImagen = prop.multimedia?.[0]?.url || "/img/fondo.png";
                 console.log("urlImagen:", urlImagen);
                 return (
                   <div
