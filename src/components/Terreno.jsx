@@ -396,7 +396,7 @@ const Terreno = ({ filteredPropiedades, filters, updateFilter }) => {
                       {(() => {
                         const imagenesProp =
                           selectedProp?.multimedia?.map(
-                            (img) => `${API_URL}/${img.url}`
+                            (img) => `${API_URL} ${img.url}`
                           ) || [];
 
                         return (
